@@ -1,0 +1,119 @@
+\documentclass[sigconf]{acmart}
+\usepackage{xcolor}
+\usepackage{hyperref}
+% ------------------------------------------------
+% Remove ACM-specific publication information
+% if this is a course/project submission.
+% ------------------------------------------------
+\settopmatter{printacmref=false}
+\setcopyright{none}
+\acmConference{}{}{}
+\acmBooktitle{}
+\acmPrice{}
+\acmDOI{}
+\acmISBN{}
+
+\begin{document}
+
+% ------------------------------------------------
+% TITLE
+% ------------------------------------------------
+
+\title{MajorMatch: From Hobbies to Major}
+
+% ------------------------------------------------
+% AUTHORS
+% ------------------------------------------------
+
+\author{Thai Hung Vuong}
+\affiliation{
+    \institution{University of Victoria}
+}
+\email{thaihungvuong@uvic.ca}
+
+\author{Brendan Wong}
+\affiliation{
+    \institution{University of Victoria}
+}
+\email{brendanwong@uvic.ca}
+
+\author{Robert Legassicke}
+\affiliation{
+    \institution{University of Victoria}
+}
+\email{roblegs@uvic.ca}
+
+\author{Yashwanthkrishna Nagharaj}
+\affiliation{
+    \institution{University of Victoria}
+}
+\email{yashwanthk@uvic.ca}
+
+% ------------------------------------------------
+% MAKE TITLE
+% ------------------------------------------------
+
+\maketitle
+
+% ------------------------------------------------
+% ABSTRACT
+% ------------------------------------------------
+
+\section{Abstract}
+Choosing university majors can be challenging for students who are unsure how their interests and hobbies relate to potential fields of study. This project, MajorMatch, aims to develop an information system that suggests students' university majors based on their hobbies, skills, interests, and preferences. Users will provide their information through a web interface, and the system will analyze the collected data using Python and machine learning models to identify patterns between students' interests and academic majors. The system will use a MySQL database to store and manage user responses and prediction-related data. By combining data collection, database management, and machine learning, MajorMatch will provide students with a broader view of potential academic majors that align with their interests. Our project repository is available at
+\href{https://github.com/yashwanth973/CSC503.git}
+{\textcolor{blue}{\underline{https://github.com/yashwanth973/CSC503.git}}}.
+% ------------------------------------------------
+% KEYWORDS
+% ------------------------------------------------
+
+\keywords{Major Prediction, Student Interests, Hobbies, Machine Learning, MySQL, Information Systems}
+
+% ------------------------------------------------
+% 1. INTRODUCTION AND MOTIVATION
+% ------------------------------------------------
+
+\section{Introduction and Motivation}
+
+Incoming university students face issues with selecting a field of study that both interests them and fits their skill set. This can lead to students spending money or time on classes that may not contribute to their future field of study. We propose a solution that will combat this problem by allowing students to receive personalized recommendations of degrees to pursue based on user information. Users will be able to provide a list of skills and hobbies and rate them on a numeric scale in terms of overall interest. MajorMatch will then provide a series of recommendations indicating which degrees best fit the user based on a percentage scale. We plan on using machine learning to train an AI model to provide these recommendations, limiting the use of pattern-matching algorithms. The AI will be trained on datasets that list real students' skills, hobbies, and majors. We plan on investigating algorithms such as the Naive Bayes algorithm~\cite{ahvar}, as well as similar existing projects for reference, with the ultimate goal of improving upon current systems.
+
+% ------------------------------------------------
+% 2. MOTIVATING EXAMPLE
+% ------------------------------------------------
+
+\section{Motivating Example}
+
+A Grade 12 student is excited to attend university the following year. They excelled in Math, Chemistry, Physics, and introductory coding classes. They are very active in the school music band and love performing and composing music in their spare time. They also love video games and dream of pursuing a career creating video games. The question is whether they should pursue a major in Math, their strongest subject, or Computer Science, which would allow them to expand their programming skills. What about a Music degree, which would allow them to pursue one of their favourite hobbies? On one hand, students may struggle with choosing which option is suitable, causing them to jump from program to program, make little progress toward graduation, and potentially drop out. On the other hand, students could use MajorMatch, examine the results, and gain valuable insight into their options based on the provided information.
+
+% ------------------------------------------------
+% 3. PROBLEM DEFINITION
+% ------------------------------------------------
+
+\section{Problem Definition}
+
+Given a set of students $U$, a set of majors $M$, and a set of interests $H$, we define an interest vector \(R_u = [r_{u,h_1}, r_{u,h_2}, \ldots, r_{u,h_n}]\), where each \(r_{u,h_i}\) which represents an individual student's overall interest profile. The corresponding major information from existing student data is used to predict a set of relevant majors for a new student. For each candidate major $m \in M$, the system generates a recommendation value $p_{u,m}$ whose value is in the interval $[0,100]$, representing the predicted percentage match between the student's interests and the major.
+
+% ------------------------------------------------
+% 4. TEAM JUSTIFICATION
+% ------------------------------------------------
+
+\section{Team Justification}
+
+Yashwanthkrishna Nagharaj will take the lead on the project, overseeing project management and conducting the literature review. He will be responsible for organizing the team and ensuring that the project remains on track. With Brendan Wong's background in Computer Science, he will contribute to the project by providing guidance on implementing the database management system and supporting the implementation of the front-end application. With Thai Hung Vuong's and Robert Legassicke's backgrounds in both Mathematics and Computer Science, as well as previous experience with user interfaces, they will support the project through data analysis, statistical implementation, computational development, and user-interface development.
+
+% ------------------------------------------------
+% REFERENCES
+% ------------------------------------------------
+
+\begin{thebibliography}{1}
+
+\bibitem{ahvar}
+E. Ahvar, A.-C. Orgerie, and A. Lebre.
+2022.
+Estimating energy consumption of cloud, fog, and edge computing infrastructures.
+\textit{IEEE Transactions on Sustainable Computing} 7, 2 (2022), 277--288.
+DOI: 10.1109/TSUSC.2019.2905900.
+
+\end{thebibliography}
+
+\end{document}
