@@ -56,7 +56,6 @@ def process_file():
         "Volunteer Group"
     ]
 
-
     training_df = df.iloc[:700]
     evaluation_df= df.iloc[700:]
     print("Training data:", training_df.shape)
@@ -83,14 +82,29 @@ def process_file():
 
 #Temporary Testing KNN Model Code:
 training_data, evaluation_data = process_file()
-print(evaluation_data[0])
 
-prediction = knn(
-    training_data,
-    evaluation_data[0][0],
-    k=15,
-    d=jaccard_distance
-)
+correct_predictions = 0
+incorrect_predictions = 0
 
-print("Recommended major:", prediction)
-print("True major:", evaluation_data[0][1])
+for o_ in evaluation_data:
+
+    prediction = knn(
+        training_data,
+        o_,
+        k=50,
+        d=jaccard_distance
+    )
+
+    print("Recommended major:", prediction)
+    print("True major:", o_[1])
+    if prediction == o_[1]:
+        print("Prediction Correct!")
+        correct_predictions += 1
+    else:
+        print("Prediction Incorrect =(")
+        incorrect_predictions += 1
+
+print(f"----- SUMMARY -----")
+print(f"Number of Correct Predictions: {correct_predictions}")
+print(f"Number of Incorrect Predictions: {incorrect_predictions}")
+print(f"Accuracy: {(correct_predictions / len(evaluation_data)) * 100}")
