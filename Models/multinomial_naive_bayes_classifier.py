@@ -1,5 +1,3 @@
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import accuracy_score
 from collections import Counter
 import pandas as pd
 import numpy as np
@@ -20,7 +18,7 @@ class MultinomialNaiveBayes:
         num_features = len(training_data[0][0])
 
         for major, count in major_count.items():
-            print(F"major: {major}, count: {count}")
+            # print(F"major: {major}, count: {count}")
             self.class_priors[major] = count / total
 
         feature_counts = {
@@ -115,35 +113,37 @@ class MultinomialNaiveBayes:
 
         return training_data, evaluation_data
 
-MNB_classifier = MultinomialNaiveBayes()
+if __name__ == "__main__":
 
-training_data, evaluation_data = MNB_classifier.process_file()
+        MNB_classifier = MultinomialNaiveBayes()
 
-MNB_classifier.fit(training_data)
+        training_data, evaluation_data = MNB_classifier.process_file()
 
-#Extracting the features and majors from trainnig data set
-X_train = [features for features, major in training_data]
-y_train = [major for features, major in training_data]
+        MNB_classifier.fit(training_data)
 
-#Extracting the features and majors from evaluation data set
-X_test = [features for features, major in evaluation_data]
-y_test = [major for features, major in evaluation_data]
+        #Extracting the features and majors from trainnig data set
+        X_train = [features for features, major in training_data]
+        y_train = [major for features, major in training_data]
 
-print("Training distribution:", Counter(y_train))
-print("Evaluation distribution:", Counter(y_test))
+        #Extracting the features and majors from evaluation data set
+        X_test = [features for features, major in evaluation_data]
+        y_test = [major for features, major in evaluation_data]
 
-predictions = [
-    MNB_classifier.predict(features, num_results=MAX_RESULTS)
-    for features, major in evaluation_data
-]
+        print("Training distribution:", Counter(y_train))
+        print("Evaluation distribution:", Counter(y_test))
 
-correct = sum(
-    actual_major in [major for major, score in predicted]
-    for predicted, actual_major in zip(predictions, y_test)
-)
+        predictions = [
+            MNB_classifier.predict(features, num_results=MAX_RESULTS)
+            for features, major in evaluation_data
+        ]
 
-accuracy = correct / len(y_test)
+        correct = sum(
+            actual_major in [major for major, score in predicted]
+            for predicted, actual_major in zip(predictions, y_test)
+        )
 
-print(f"Prediction results: {predictions}")
-print("Accuracy:", accuracy)
+        accuracy = correct / len(y_test)
 
+        print(f"Prediction results: {predictions}")
+        print("Accuracy:", accuracy)
+    
