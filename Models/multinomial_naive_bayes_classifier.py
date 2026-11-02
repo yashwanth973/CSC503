@@ -5,6 +5,8 @@ import pandas as pd
 import numpy as np
 import math
 
+MAX_RESULTS = 2
+
 class MultinomialNaiveBayes:
 
     def __init__(self, alpha=1.0):
@@ -45,9 +47,8 @@ class MultinomialNaiveBayes:
 
                 self.feature_probabilities[major].append(probability)
 
-    def predict(self, student_features):
-        best_major = None
-        best_score = float("-inf")
+    def predict(self, student_features, num_results=1):
+        results = {}
 
         for major, prior in self.class_priors.items():
 
@@ -62,11 +63,15 @@ class MultinomialNaiveBayes:
                 score += feature_value * math.log(probability)
 
             # Keep track of the highest-scoring major
-            if score > best_score:
-                best_score = score
-                best_major = major
+            results[major] = score
 
-        return best_major
+        sorted_majors = sorted(
+            results.items(),
+            key=lambda item: item[1],
+            reverse=True
+        )
+
+        return sorted_majors[:num_results]
 
     @staticmethod
     def process_file():
@@ -127,8 +132,18 @@ y_test = [major for features, major in evaluation_data]
 print("Training distribution:", Counter(y_train))
 print("Evaluation distribution:", Counter(y_test))
 
-our_predictions = [MNB_classifier.predict(features) for features, major in evaluation_data]
+predictions = [
+    MNB_classifier.predict(features, num_results=MAX_RESULTS)
+    for features, major in evaluation_data
+]
 
-our_accuracy = accuracy_score(y_test, our_predictions)
+correct = sum(
+    actual_major in [major for major, score in predicted]
+    for predicted, actual_major in zip(predictions, y_test)
+)
 
-print("Our MNB accuracy:", our_accuracy)
+accuracy = correct / len(y_test)
+
+print(f"Prediction results: {predictions}")
+print("Accuracy:", accuracy)
+
