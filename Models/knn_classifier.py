@@ -90,7 +90,7 @@ for o_ in evaluation_data:
 
     prediction = knn(
         training_data,
-        o_,
+        o_[0],
         k=50,
         d=jaccard_distance
     )
