@@ -4,6 +4,12 @@ import numpy as np
 
 class KNN:
 
+    FEATURES = [
+        "Artistic", "Data Analysis", "Leadership", "Problem Solving",
+        "Programming", "Public Speaking", "Art Club", "Coding Club",
+        "Debate Club", "Music Club", "Sports Team", "Volunteer Group"
+    ]
+
     def jaccard_distance(self, o1, o2):
         intersection = 0
         union = 0
@@ -15,7 +21,7 @@ class KNN:
                 union += 1
         if union == 0:
             return 0.0
-        
+
         return 1 - (intersection/union)
 
     def knn(self, O_star, o_, k, d, n):
@@ -45,7 +51,7 @@ class KNN:
         return ranked[:n]
 
     def process_file(self):
-        df = pd.read_csv(r"Datasets\student_data_extended.xlsx - Organized Data.csv", header = 1)
+        df = pd.read_excel(filename, header = 0)
 
         features = [
             "Artistic",
@@ -71,11 +77,11 @@ class KNN:
         evaluation_data = []
 
         for index, row in training_df.iterrows():
-            student_features = row[features].astype(int).tolist()
+            student_features = row[self.FEATURES].astype(int).tolist()
             major = row["Major"]
 
             training_data.append((student_features, major))
-            
+
 
         for index, row in evaluation_df.iterrows():
             student_features = row[features].astype(int).tolist()
@@ -84,38 +90,3 @@ class KNN:
             evaluation_data.append((student_features, major))
 
         return training_data, evaluation_data
-
-
-#Temporary Testing KNN Model Code:
-if __name__ == "__main__":
-    model = KNN()
-    training_data, evaluation_data = model.process_file()
-
-    valid_recommendations = 0
-    invalid_recommendations = 0
-
-    for o_ in evaluation_data:
-        correctness = False
-        output = model.knn(
-            training_data,
-            o_[0],
-            k=7,
-            d=model.jaccard_distance,
-            n = 2
-        )
-
-        print("Recommended major:", output)
-        print("True major:", o_[1])
-        for guess in output:
-          if guess == o_[1]:
-              valid_recommendations += 1
-              print("Valid Recommendation")
-              correctness = True
-        if not correctness:
-            print("Invalid Recommendation")
-            invalid_recommendations += 1
-
-    print(f"----- SUMMARY -----")
-    print(f"Number of Valid Recommendation: {valid_recommendations}")
-    print(f"Number of Incorrect Predictions: {invalid_recommendations}")
-    print(f"Accuracy: {(valid_recommendations / len(evaluation_data)) * 100}")
