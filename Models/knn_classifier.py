@@ -16,7 +16,7 @@ def jaccard_distance(o1, o2):
     
     return 1 - (intersection/union)
 
-def knn(O_star, o_, k, d):
+def knn(O_star, o_, k, d, n):
     if (k <= 0 ):
         raise ValueError("The provided value k must be positive")
 
@@ -29,15 +29,18 @@ def knn(O_star, o_, k, d):
     distances.sort(key=lambda x:x[0]) #Sorts observation by distance in ascending order
     neighbors = distances[:k]
     counts = {}
-    
+    closest = {}
+
     #
     for distance, major in neighbors:
         counts[major] = counts.get(major, 0) + 1
+        if major not in closest:
+          closest[major] = distance
+    ranked = sorted(counts, key = lambda m: (-counts[m], closest[m])) # if the votes are tie then compare the distance
+    if n == 1:
+      return ranked[0]
 
-    predicted_major = max(counts, key=counts.get)
-
-    return predicted_major
-
+    return ranked[:n]
 def process_file():
     df = pd.read_csv(r"Datasets\student_data_extended.xlsx - Organized Data.csv", header = 1)
 
@@ -81,30 +84,35 @@ def process_file():
 
 
 #Temporary Testing KNN Model Code:
+import numpy as np
+
 training_data, evaluation_data = process_file()
 
-correct_predictions = 0
-incorrect_predictions = 0
+valid_recommendations = 0
+invalid_recommendations = 0
 
 for o_ in evaluation_data:
-
-    prediction = knn(
+    correctness = False
+    output = knn(
         training_data,
-        o_,
-        k=50,
-        d=jaccard_distance
+        o_[0],
+        k=7,
+        d=jaccard_distance,
+        n = 2
     )
 
-    print("Recommended major:", prediction)
+    print("Recommended major:", output)
     print("True major:", o_[1])
-    if prediction == o_[1]:
-        print("Prediction Correct!")
-        correct_predictions += 1
-    else:
-        print("Prediction Incorrect =(")
-        incorrect_predictions += 1
+    for guess in output:
+      if guess == o_[1]:
+          valid_recommendations += 1
+          print("Valid Recommendation")
+          correctness = True
+    if not correctness:
+        print("Invalid Recommendation")
+        invalid_recommendations += 1
 
 print(f"----- SUMMARY -----")
-print(f"Number of Correct Predictions: {correct_predictions}")
-print(f"Number of Incorrect Predictions: {incorrect_predictions}")
-print(f"Accuracy: {(correct_predictions / len(evaluation_data)) * 100}")
+print(f"Number of Valid Recommendation: {valid_recommendations}")
+print(f"Number of Incorrect Predictions: {invalid_recommendations}")
+print(f"Accuracy: {(valid_recommendations / len(evaluation_data)) * 100}")
