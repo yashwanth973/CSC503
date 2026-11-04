@@ -1,5 +1,5 @@
 from Models.multinomial_naive_bayes_classifier import MultinomialNaiveBayes
-from knn import KNN
+from Models.knn_classifier import KNN
 MAX_RESULTS = 2
 
 def main():
@@ -14,7 +14,7 @@ def main():
 
     predictions = MNB_classifier.predict(student_features, num_results=MAX_RESULTS)
 
-    print(f"Prediction results for MNB: {predictions}")
+    print(f"Prediction results for MNB: {[ major for major, score in predictions]}")
     
     #K-NN Classifier
     print("Starting K-Nearest Neighbor Classifier")
@@ -22,7 +22,7 @@ def main():
     
     # Load and prepare the data once, not on every call
     model = KNN()
-    training_data, evaluation_data = model.process_file(DATA_FILE)
+    training_data, evaluation_data = model.process_file()
 
 
     def recommend_majors(selected, top_n=2, k=K):
