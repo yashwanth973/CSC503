@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+filename = "Datasets/student_data_extended.xlsx - Organized Data.csv"
 
 class KNN:
 
@@ -51,7 +52,7 @@ class KNN:
         return ranked[:n]
 
     def process_file(self):
-        df = pd.read_excel(filename, header = 0)
+        df = pd.read_csv(filename, header = 1)
 
         features = [
             "Artistic",
