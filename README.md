@@ -6,3 +6,28 @@
   The system will use the stored data and machine learning method to learn the pattern between hobbies, skills and interests to identify majors that have the closest match to a student's profile. A web-based interface will allow students to enter their information and view the recommended majors. The database will also allow the system to efficiently retrieve and update information as new students, majors, skills, and interests are added.
 
   The main goal of MajorMatch is to provide students with an organized way to explore potential academic majors based on their individual profiles. Rather than relying only on general descriptions of majors, the system will use structured data stored in the database to generate recommendations based on the student's selected skills and interests.
+
+## 1. Clone the Repository
+
+Open a terminal and run:
+
+```bash
+git clone https://github.com/yashwanth973/CSC503.git
+```
+
+
+## 2. Install Requirements
+
+Install the required packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+## 3. Run the Program
+
+Once all dependencies have been installed, run the main Python file:
+
+```bash
+python main.py
+```
