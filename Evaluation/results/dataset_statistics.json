@@ -1,0 +1,24 @@
+{
+  "survey": {
+    "instances": 1000,
+    "features": 12,
+    "classes": 6,
+    "min_class_share": 0.149,
+    "max_class_share": 0.179,
+    "avg_features_per_student": 7.07,
+    "feature_prevalence_min": 0.57,
+    "feature_prevalence_max": 0.6,
+    "missing_values": 0
+  },
+  "benchmark": {
+    "instances": 1000,
+    "features": 12,
+    "classes": 6,
+    "min_class_share": 0.149,
+    "max_class_share": 0.193,
+    "avg_features_per_student": 6.5,
+    "feature_prevalence_min": 0.48,
+    "feature_prevalence_max": 0.62,
+    "missing_values": 0
+  }
+}
